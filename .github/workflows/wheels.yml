@@ -23,7 +23,7 @@ jobs:
       
       matrix:
         python-version: [3.5,3.6, 3.7, 3.8, 3.9, 3.10]
-        os: [ubuntu-latest, ubuntu-21.04, ubuntu-20.04, windows-2019, windows-latest, macOs-latest, macOS-10, maOS-11, macOS-12]
+        os: [ubuntu-latest, ubuntu-20.04, windows-2019, windows-latest, macOs-latest, macOS-10, maOS-11, macOS-12]
         
     steps:
       #this will bring our code to the container
@@ -44,7 +44,7 @@ jobs:
         
       - uses: actions/upload-artifact@v3
         with:
-          name: ./wheelhouse/build-wheel-report
+          name: build-wheel-report
           path: ./wheelhouse/*.whl
           # this will remove the report after 30 days
           retention-days: 30 
