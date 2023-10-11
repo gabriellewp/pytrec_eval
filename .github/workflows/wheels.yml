@@ -17,11 +17,13 @@ jobs:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      
       matrix:
         python-version: [3.5,3.6, 3.7, 3.8, 3.9, 3.10]
         os: [ubuntu-latest, ubuntu-21.04, ubuntu-20.04, windows-2019, windows-latest, macOs-latest, macOS-10, maOS-11, macOS-12, macOS-13]
         
     steps:
+      #this will bring our code to the container
       - name: Checkout PGBM 
         uses: actions/checkout@v4
 
@@ -36,11 +38,14 @@ jobs:
 
       - name: Build wheels
         run: python -m cibuildwheel --output-dir wheelhouse
-        env:
-          CIBW_ARCHS_MACOS: x86_64 arm64
+        
       - uses: actions/upload-artifact@v3
         with:
+          name: ./wheelhouse/build-wheel-report
           path: ./wheelhouse/*.whl
+          # this will remove the report after 30 days
+          retention-days: 30 
+
 
   build_sdist:
     name: Build source distribution
@@ -53,7 +58,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          path: dist/*.tar.gz
+          path: ./dist/*.tar.gz
 
   pypi-publish:
     needs: [build_wheels, build_sdist]
@@ -71,12 +76,12 @@ jobs:
           # unpacks default artifact into dist/
           # if `name: artifact` is omitted, the action will create extra parent dir
           name: artifact
-          path: dist
+          path: ./dist
 
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages_dir: artifact/
+          packages_dir: ./artifact/
 
 
 
