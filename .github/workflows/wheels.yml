@@ -1,7 +1,7 @@
 name: Build
 
 #on: [push, pull_request, workflow_call]
-on: [push]
+on: [push, workflow_call]
 
 #
 #on: 
@@ -22,8 +22,8 @@ jobs:
     strategy:
       
       matrix:
-        python-version: [3.5,3.6, 3.7, 3.8, 3.9, 3.10]
-        os: [ubuntu-latest, ubuntu-20.04, windows-2019, windows-latest, macOs-latest, macOS-10, maOS-11, macOS-12]
+        python-version: [3.8, 3.9, 3.10]
+        os: [ubuntu-latest, ubuntu-20.04, windows-2019, windows-latest, macOs-latest, maOS-11, macOS-12]
         
     steps:
       #this will bring our code to the container
